@@ -8,9 +8,11 @@
 // work with Wifi-enabled Arduinos
 // #define ENABLE_WIFI
 
+#ifdef ENABLE_WIFI
 const char* ssid     = "your-ssid";
 const char* password = "your-password";
 const int NETWORK_PORT = 27016;
+#endif
 
 // Use these defines to easily enable or disable certain modules
 
@@ -21,7 +23,7 @@ const int NETWORK_PORT = 27016;
 #define ENABLE_SERVO 
 #endif
 
-#define ENABLE_ACCELSTEPPER
+// #define ENABLE_ACCELSTEPPER
 
 // This is rarely used
 // #define ENABLE_BASIC_SCHEDULER
@@ -32,7 +34,10 @@ const int NETWORK_PORT = 27016;
 #define ENABLE_DIGITAL
 #define ENABLE_DHT
 #define ENABLE_FREQUENCY
+
 #define ENABLE_SONAR
+#define ENABLE_BUZZER
+
 
 #ifdef ENABLE_DIGITAL
 #include <DigitalInputFirmata.h>
@@ -86,8 +91,13 @@ DhtFirmata dhtFirmata;
 #endif
 
 #ifdef ENABLE_SONAR
-#include <SonarFirmata.h>
+#include "src/SonarFirmata.h"
 SonarFirmata sonarFirmata;
+#endif
+
+#ifdef ENABLE_BUZZER
+#include "src/BuzzerFirmata.h"
+BuzzerFirmata buzzerFirmata;
 #endif
 
 #include <FirmataExt.h>
@@ -208,6 +218,10 @@ void initFirmata()
   firmataExt.addFeature(sonarFirmata);
 #endif
 
+#ifdef ENABLE_BUZZER
+  firmataExt.addFeature(buzzerFirmata);
+#endif
+
 #ifdef ENABLE_FREQUENCY
   firmataExt.addFeature(frequency);
 #endif
@@ -217,13 +231,11 @@ void initFirmata()
 
 void setup()
 {
+	initFirmata();
 	initTransport();
 	Firmata.sendString(F("Booting device. Stand by..."));
-	initFirmata();
 
 	Firmata.parse(SYSTEM_RESET);
-
-	// Firmata.sendString(F("System booted. Free bytes: 0x"), freeMemory());
 }
 
 void loop()
