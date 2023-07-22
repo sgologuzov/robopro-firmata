@@ -1,0 +1,12 @@
+[submodule "libraries/Ultrasonic"]
+	path = libraries/Ultrasonic
+	url = https://github.com/ErickSimoes/Ultrasonic.git
+[submodule "libraries/ConfigurableFirmata"]
+	path = libraries/ConfigurableFirmata
+	url = https://github.com/firmata/ConfigurableFirmata
+[submodule "libraries/Adafruit_Unified_Sensor"]
+	path = libraries/Adafruit_Unified_Sensor
+	url = https://github.com/adafruit/Adafruit_Sensor
+[submodule "libraries/DHT_sensor_library"]
+	path = libraries/DHT_sensor_library
+	url = https://github.com/adafruit/DHT-sensor-library
