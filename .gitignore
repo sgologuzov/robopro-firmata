@@ -5,4 +5,4 @@
 *_build
 
 # patched flag
-*.patched.flag
+patched.flag

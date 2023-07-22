@@ -20,20 +20,22 @@ COMMON_COMPILE_ARG = $(VERBOSE) --libraries ${LIBRARIES_PATH} --output-dir=$(BUI
 
 .PHONY: all clean
 
-.Boards.patched.flag:
-	git apply patch/Boards.patch
-	echo true > .Boards.patched.flag
-
 all: arduinoUno arduinoUnoUltra arduinoMega2560
+
+patched.flag:
+	git apply patch/Boards.patch
+	echo > patched.flag
 
 arduinoUno:
 	$(ARDUINO_CLI) compile $(COMMON_COMPILE_ARG) -b arduino:avr:uno ConfigurableFirmata.ino
 
-arduinoUnoUltra: .Boards.patched.flag
+arduinoUnoUltra: patched.flag
 	$(ARDUINO_CLI) compile $(COMMON_COMPILE_ARG) -b arduino:avr:uno --build-property build.extra_flags=-DARDUINO_UNO_ULTRA ConfigurableFirmata.ino 
 
 arduinoMega2560:
 	$(ARDUINO_CLI) compile $(COMMON_COMPILE_ARG) -b arduino:avr:mega:cpu=atmega2560 ConfigurableFirmata.ino
 
 clean:
-	@rm -rf *_$(BUILD_DIR)
+	rm -rf *_$(BUILD_DIR)
+	rm -rf patched.flag
+	cd ./libraries/ConfigurableFirmata && git checkout .
