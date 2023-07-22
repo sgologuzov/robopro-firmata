@@ -1,0 +1,8 @@
+# vscode config file
+.vscode
+
+# build file
+*_build
+
+# patched flag
+*.patched.flag

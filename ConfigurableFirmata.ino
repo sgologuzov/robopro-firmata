@@ -23,6 +23,12 @@ const int NETWORK_PORT = 27016;
 #define ENABLE_SERVO 
 #endif
 
+#if defined(__AVR__)
+#define FIRMATA_BAUDRATE 57600
+#else
+#define FIRMATA_BAUDRATE 115200
+#endif
+
 // #define ENABLE_ACCELSTEPPER
 
 // This is rarely used
@@ -159,7 +165,7 @@ void initTransport()
   Firmata.begin(serverStream);
   Firmata.blinkVersion(); // Because the above doesn't do it.
 #else 
-  Firmata.begin(115200);
+  Firmata.begin(FIRMATA_BAUDRATE);
 #endif
     
 }
