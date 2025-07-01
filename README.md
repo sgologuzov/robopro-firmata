@@ -1,8 +1,6 @@
-# openblock-firmata
+# robopro-firmata
 
 ### Instructions
 ```bash
-git submodule init
-git submodule update
-make all
+pio run
 ```
